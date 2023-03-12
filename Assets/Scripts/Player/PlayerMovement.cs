@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
         player = GetComponent<Player>();
         rigidBody2D = GetComponent<Rigidbody2D>();
         InputManager.instance.inputActions.PlayerInput.Target.performed += OnTarget;
+        InputManager.instance.inputActions.PlayerInput.Dash.performed += OnDash;
     }
 
     public void SetTarget(AI newTarget)
@@ -135,5 +136,10 @@ public class PlayerMovement : MonoBehaviour
             SetTarget(null);
             lockState = LockState.FREE;
         }
+    }
+
+    private void OnDash(InputAction.CallbackContext obj)
+    {
+
     }
 }

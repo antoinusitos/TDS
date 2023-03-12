@@ -134,6 +134,15 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dash"",
+                    ""type"": ""Button"",
+                    ""id"": ""3b74c25e-5299-4672-bc05-244accded9de"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -283,7 +292,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c2b70253-9e19-4f9d-b07c-6678d5762070"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -426,7 +435,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""04e70132-a61e-4a67-8838-ed16861e831c"",
-                    ""path"": ""<Keyboard>/leftShift"",
+                    ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -488,6 +497,28 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                     ""action"": ""Menu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fd9873a6-ad98-48c3-b355-8865905108ba"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a7ed67c8-9224-4c53-ab72-b253bfffad53"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -525,6 +556,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         m_PlayerInput_Item3 = m_PlayerInput.FindAction("Item3", throwIfNotFound: true);
         m_PlayerInput_Target = m_PlayerInput.FindAction("Target", throwIfNotFound: true);
         m_PlayerInput_Menu = m_PlayerInput.FindAction("Menu", throwIfNotFound: true);
+        m_PlayerInput_Dash = m_PlayerInput.FindAction("Dash", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -596,6 +628,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerInput_Item3;
     private readonly InputAction m_PlayerInput_Target;
     private readonly InputAction m_PlayerInput_Menu;
+    private readonly InputAction m_PlayerInput_Dash;
     public struct PlayerInputActions
     {
         private @GameInput m_Wrapper;
@@ -612,6 +645,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         public InputAction @Item3 => m_Wrapper.m_PlayerInput_Item3;
         public InputAction @Target => m_Wrapper.m_PlayerInput_Target;
         public InputAction @Menu => m_Wrapper.m_PlayerInput_Menu;
+        public InputAction @Dash => m_Wrapper.m_PlayerInput_Dash;
         public InputActionMap Get() { return m_Wrapper.m_PlayerInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -657,6 +691,9 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                 @Menu.started -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnMenu;
                 @Menu.performed -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnMenu;
                 @Menu.canceled -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnMenu;
+                @Dash.started -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnDash;
+                @Dash.performed -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnDash;
+                @Dash.canceled -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnDash;
             }
             m_Wrapper.m_PlayerInputActionsCallbackInterface = instance;
             if (instance != null)
@@ -697,6 +734,9 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                 @Menu.started += instance.OnMenu;
                 @Menu.performed += instance.OnMenu;
                 @Menu.canceled += instance.OnMenu;
+                @Dash.started += instance.OnDash;
+                @Dash.performed += instance.OnDash;
+                @Dash.canceled += instance.OnDash;
             }
         }
     }
@@ -724,5 +764,6 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         void OnItem3(InputAction.CallbackContext context);
         void OnTarget(InputAction.CallbackContext context);
         void OnMenu(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
     }
 }
