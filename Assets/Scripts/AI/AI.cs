@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class AI : Entity
@@ -22,6 +23,10 @@ public class AI : Entity
     public bool canMove = true;
 
     public float XPGiven = 0.0f;
+
+    public GameObject targetFeedback = null;
+
+    public UnityEvent eventOnDeath = null;
 
     private void Start()
     {
@@ -48,6 +53,7 @@ public class AI : Entity
                 }
             }
 
+            eventOnDeath.Invoke();
             Destroy(gameObject);
         }
     }

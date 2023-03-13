@@ -7,7 +7,7 @@ public class EntityStat : MonoBehaviour
     /// </summary>
     public bool lifeValueDirty = false;
 
-    public float currentLife { get { return _currentLife; } set { _currentLife = value; lifeValueDirty = true; } }
+    public float currentLife { get { return _currentLife; } set { _currentLife = value; } }
 
     [SerializeField]
     private float _currentLife = 100.0f;
@@ -21,11 +21,13 @@ public class EntityStat : MonoBehaviour
     {
         currentLife += value;
         currentLife = Mathf.Clamp(currentLife, 0, maxLife);
+        lifeValueDirty = true;
     }
 
     public void UpdateMaxLifeStat(float value)
     {
         maxLife += value;
+        lifeValueDirty = true;
     }
 
     /// <summary>
@@ -34,7 +36,7 @@ public class EntityStat : MonoBehaviour
 
     public bool staminaValueDirty = false;
 
-    public float currentStamina { get { return _currentStamina; } set { _currentStamina = value; staminaValueDirty = true; } }
+    public float currentStamina { get { return _currentStamina; } set { _currentStamina = value; } }
 
     [SerializeField]
     private float _currentStamina = 100.0f;
@@ -48,11 +50,13 @@ public class EntityStat : MonoBehaviour
     {
         currentStamina += value;
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+        staminaValueDirty = true;
     }
 
     public void UpdateMaxStaminaStat(float value)
     {
         maxStamina += value;
+        staminaValueDirty = true;
     }
 
     /// <summary>

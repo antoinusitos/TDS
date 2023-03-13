@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     private readonly float speed = 10.0f;
 
-	public Transform playerSprite = null;
+    public Transform playerSprite = null;
 
     private Player player = null;
 
@@ -22,6 +22,14 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 Movement = Vector2.zero;
 
     private AI target = null;
+
+    private bool isDashing = false;
+    private Vector2 dashingMovement = Vector2.zero;
+
+    private readonly float dashingSpeed = 30.0f;
+    private readonly float dashTime = 0.1f;
+    private float currentDashTime = 0f;
+    private readonly float dashCost = 15.0f;
 
     private void Start()
     {
@@ -33,13 +41,33 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetTarget(AI newTarget)
     {
+        if (target)
+        {
+            target.targetFeedback.SetActive(false);
+        }
         target = newTarget;
+        if(target)
+        {
+            target.targetFeedback.SetActive(true);
+        }
     }
 
     private void FixedUpdate()
     {
         if(player.playerState != PlayerState.GAME)
         {
+            return;
+        }
+
+        if(isDashing)
+        {
+            rigidBody2D.MovePosition(rigidBody2D.position + dashingSpeed * Time.fixedDeltaTime * dashingMovement);
+            currentDashTime += Time.fixedDeltaTime;
+            if(currentDashTime >= dashTime)
+            {
+                currentDashTime = 0;
+                isDashing = false;
+            }
             return;
         }
 
@@ -51,12 +79,6 @@ public class PlayerMovement : MonoBehaviour
         Movement.Normalize();
 
         rigidBody2D.MovePosition(rigidBody2D.position + speed * Time.fixedDeltaTime * Movement);
-
-        if(Movement.x == 0 && Movement.y == 0)
-        {
-            return;
-        }
-
     }
 
     private void Update()
@@ -140,6 +162,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDash(InputAction.CallbackContext obj)
     {
+        if(player.GetEntityStat().currentStamina < dashCost)
+        {
+            return;
+        }
 
+        player.UseStamina();
+
+        player.GetEntityStat().UpdateStaminaStat(-dashCost);
+
+        isDashing = true;
+        dashingMovement = Vector2.zero;
+        dashingMovement += Vector2.up * InputManager.instance.inputActions.PlayerInput.Forward.ReadValue<float>();
+        dashingMovement += Vector2.right * InputManager.instance.inputActions.PlayerInput.Right.ReadValue<float>();
+
+        dashingMovement.Normalize();
     }
 }

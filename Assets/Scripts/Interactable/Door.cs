@@ -73,6 +73,26 @@ public class Door : Interactable
         }
     }
 
+    public void ForceCloseDoor()
+    {
+        opened = false;
+        StartCoroutine("CloseDoor");
+    }
+
+    private IEnumerator CloseDoor()
+    {
+        audioSource.Play();
+        Transform localTransform = transform;
+        startPosition = localTransform.position;
+        float timer = 0;
+        while (timer < 1)
+        {
+            localTransform.position = Vector3.Lerp(startPosition, startPosition - openMovementSize, timer);
+            timer += Time.deltaTime * openSpeed;
+            yield return null;
+        }
+    }
+
     private IEnumerator OpenDoor()
     {
 		audioSource.Play();

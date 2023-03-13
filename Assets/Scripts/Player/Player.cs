@@ -29,6 +29,10 @@ public class Player : Entity
 
     public GameObject menuCanvas = null;
 
+    private readonly float staminaRecoverDelay = 1.0f;
+    private float currentStaminaRecoverDelay = 0f;
+    private readonly float staminaRecoverSpeed = 20.0f;
+
     protected override void Awake()
     {
         base.Awake();
@@ -44,7 +48,16 @@ public class Player : Entity
 
     private void Update()
     {
-        if(entityStat.lifeValueDirty)
+        if(currentStaminaRecoverDelay < staminaRecoverDelay)
+        {
+            currentStaminaRecoverDelay += Time.deltaTime;
+        }
+        else if(entityStat.currentStamina < entityStat.maxStamina)
+        {
+            entityStat.UpdateStaminaStat(Time.deltaTime * staminaRecoverSpeed);
+        }
+
+        if (entityStat.lifeValueDirty)
         {
             lifeSlider.value = entityStat.currentLife / entityStat.maxLife;
         }
@@ -101,5 +114,10 @@ public class Player : Entity
     public void GiveXP(float amount)
     {
         entityStat.UpdateXPStat(amount);
+    }
+
+    public void UseStamina()
+    {
+        currentStaminaRecoverDelay = 0;
     }
 }
