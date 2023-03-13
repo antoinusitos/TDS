@@ -24,7 +24,7 @@ public class InGameMenu : MonoBehaviour
         EntityStat entityStat = Player.instance.GetEntityStat();
         lifeText.text = $"Life : {entityStat.currentLife} / {entityStat.maxLife}";
         staminaText.text = $"Stamina : {entityStat.currentStamina} / {entityStat.maxStamina}";
-        xpText.text = $"XP : {entityStat.currentXP}";
+        xpText.text = $"Shapes : {entityStat.currentShapes}";
 
         for (int i = 0; i < inventoryPanel.childCount; i++)
         {

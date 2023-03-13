@@ -75,16 +75,17 @@ public class EntityStat : MonoBehaviour
     /// <summary>
     /// XP
     /// </summary>
-    public bool XPValueDirty = false;
+    public bool shapesValueDirty = false;
 
-    public float currentXP { get { return _currentXP; } set { _currentLife = value; XPValueDirty = true; } }
+    public int currentShapes { get { return _currentShapes; } set { _currentShapes = value;  } }
 
     [SerializeField]
-    private float _currentXP = 100.0f;
+    private int _currentShapes = 0;
 
 
-    public void UpdateXPStat(float value)
+    public void UpdateShapesStat(int value)
     {
-        _currentXP += value;
+        _currentShapes += value;
+        shapesValueDirty = true;
     }
 }

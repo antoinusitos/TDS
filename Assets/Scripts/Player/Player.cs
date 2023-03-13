@@ -19,6 +19,8 @@ public class Player : Entity
     public Slider lifeSlider = null;
     public Slider staminaSlider = null;
 
+    public Text shapesText = null;
+
     public GameObject interactionText = null;
 
     public Shrine currentShrine = null;
@@ -65,6 +67,10 @@ public class Player : Entity
         {
             staminaSlider.value = entityStat.currentStamina / entityStat.maxStamina;
         }
+        if (entityStat.shapesValueDirty)
+        {
+            shapesText.text = entityStat.currentShapes.ToString();
+        }
     }
 
     private void OnMenu(InputAction.CallbackContext obj)
@@ -105,15 +111,16 @@ public class Player : Entity
     {
         entityStat.UpdateLifeStat(entityStat.maxLife);
         entityStat.UpdateStaminaStat(entityStat.maxStamina);
+        entityStat.UpdateShapesStat(-entityStat.currentShapes);
         if (startingEquipment)
         {
             startingEquipment.RefillIfMissing();
         }
     }
 
-    public void GiveXP(float amount)
+    public void GiveShapes(int amount)
     {
-        entityStat.UpdateXPStat(amount);
+        entityStat.UpdateShapesStat(amount);
     }
 
     public void UseStamina()

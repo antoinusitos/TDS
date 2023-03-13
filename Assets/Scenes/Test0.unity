@@ -6731,6 +6731,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6754593177783531139, guid: 39af36cf38857fc459bee95a4ab2dd29, type: 3}
   m_PrefabInstance: {fileID: 1030584296}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1410049753 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3814082626151441645, guid: 3ca8028c1518d6f4c9d0c7298a7623e9, type: 3}
+  m_PrefabInstance: {fileID: 3779107678094438352}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1418071845
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10377,6 +10388,10 @@ PrefabInstance:
       propertyPath: menuCanvas
       value: 
       objectReference: {fileID: 2067650062}
+    - target: {fileID: 483361941, guid: e7f7d1c70dbff5c4cbc3865f6ad173ed, type: 3}
+      propertyPath: shapesText
+      value: 
+      objectReference: {fileID: 1410049753}
     - target: {fileID: 483361941, guid: e7f7d1c70dbff5c4cbc3865f6ad173ed, type: 3}
       propertyPath: staminaSlider
       value: 

@@ -811,8 +811,11 @@ MonoBehaviour:
   stoppingDistance: 3
   aiSprite: {fileID: 7400444256577677380}
   canMove: 1
-  XPGiven: 0
+  shapesGiven: 100
   targetFeedback: {fileID: 2967103430714361130}
+  eventOnDeath:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2143981490354851954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -833,8 +836,8 @@ MonoBehaviour:
   _maxStamina: 100
   _currentDamage: 20
   _maxDamage: 20
-  XPValueDirty: 0
-  _currentXP: 100
+  shapesValueDirty: 0
+  _currentShapes: 0
 --- !u!114 &6790621241794781659
 MonoBehaviour:
   m_ObjectHideFlags: 0

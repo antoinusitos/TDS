@@ -22,7 +22,7 @@ public class AI : Entity
 
     public bool canMove = true;
 
-    public float XPGiven = 0.0f;
+    public int shapesGiven = 0;
 
     public GameObject targetFeedback = null;
 
@@ -54,6 +54,7 @@ public class AI : Entity
             }
 
             eventOnDeath.Invoke();
+            Player.instance.GetEntityStat().UpdateShapesStat(shapesGiven);
             Destroy(gameObject);
         }
     }
