@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    public bool overrideTriggerEnter = false;
-
     public virtual void ShowInteraction(bool newState)
     {
         Player.instance.ShowInteraction(newState);
@@ -19,13 +17,8 @@ public class Interactable : MonoBehaviour
 
     }
 
-    protected void OnTriggerEnter2D(Collider2D other)
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        if(overrideTriggerEnter)
-        {
-            return;
-        }
-
         PlayerAction pa = other.GetComponent<PlayerAction>();
         if (!pa)
         {
@@ -35,13 +28,8 @@ public class Interactable : MonoBehaviour
         pa.AddInteractable(this);
     }
 
-    protected void OnTriggerExit2D(Collider2D other)
+    protected virtual void OnTriggerExit2D(Collider2D other)
     {
-        if (overrideTriggerEnter)
-        {
-            return;
-        }
-
         PlayerAction pa = other.GetComponent<PlayerAction>();
         if (!pa)
         {

@@ -21,7 +21,6 @@ public class Door : Interactable
 
     private void Awake()
     {
-        overrideTriggerEnter = true;
 		audioSource = GetComponent<AudioSource>();
     }
 
@@ -106,4 +105,10 @@ public class Door : Interactable
             yield return null;
         }
     }
+
+    protected override void OnTriggerEnter2D(Collider2D other)
+    { }
+
+    protected override void OnTriggerExit2D(Collider2D other)
+    { }
 }
