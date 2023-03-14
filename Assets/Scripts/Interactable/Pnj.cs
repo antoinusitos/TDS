@@ -44,6 +44,7 @@ public class Pnj : Interactable
 
     private IEnumerator Dialogue()
     {
+        SoundManager.instance.PlaySound("voice");
         UIManager.instance.ShowDialogueCanvas(true);
         for (int i = 0; i < dialoguesLines.Count; i++)
         {

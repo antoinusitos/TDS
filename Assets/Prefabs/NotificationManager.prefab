@@ -390,7 +390,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &7088652013542959896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,3 +423,5 @@ MonoBehaviour:
   notificationPanel: {fileID: 7088652012378672735}
   notificationText: {fileID: 7088652013414490014}
   notificationQuantityText: {fileID: 0}
+  unlockAudioSource: {fileID: 0}
+  drinkAudioSource: {fileID: 0}

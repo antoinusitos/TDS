@@ -56,7 +56,7 @@ public class Door : Interactable
                 if(pi.items.ContainsKey(keyID))
                 {
                     NotificationManager.instance.AddNotification("Used " + ItemManager.instance.itemsData.GetGameItemWithID(keyID).name);
-                    NotificationManager.instance.PlayUnlockSound();
+                    SoundManager.instance.PlaySound("unlock");
                     usedDoorSide.isLocked = false;
                     return;
                 }

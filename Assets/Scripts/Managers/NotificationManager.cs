@@ -21,14 +21,9 @@ public class NotificationManager : MonoBehaviour
     public Text notificationText = null;
     public Text notificationQuantityText = null;
 
-    private AudioSource audioSource = null;
-    public AudioSource unlockAudioSource = null;
-    public AudioSource drinkAudioSource = null;
-
     private void Awake()
     {
         instance = this;
-        audioSource = GetComponent<AudioSource>();
     }
 
     public void AddNotification(string notification, int quantity = -1)
@@ -67,20 +62,5 @@ public class NotificationManager : MonoBehaviour
         Player.instance.playerState = PlayerState.GAME;
         notificationPanel.SetActive(false);
         isClosed = true;
-    }
-
-    public void PlayPickupSound()
-    {
-        audioSource.Play();
-    }
-
-    public void PlayUnlockSound()
-    {
-        unlockAudioSource.Play();
-    }
-
-    public void PlayDrinkSound()
-    {
-        drinkAudioSource.Play();
     }
 }

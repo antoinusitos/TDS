@@ -24,7 +24,7 @@ public class Item
                 if(itemEffect.category == 0)
                 {
                     user.GetEntityStat().UpdateLifeStat(itemEffect.effectValue);
-                    NotificationManager.instance.PlayDrinkSound();
+                    SoundManager.instance.PlaySound("drink");
                 }
                 break;
         }
