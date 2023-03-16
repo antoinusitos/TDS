@@ -10,15 +10,13 @@ public class AI : Entity
 
     public ItemDrop itemDropPrefab = null;
 
-    private Player target = null;
+    protected Player target = null;
 
-    private NavMeshAgent navMeshAgent = null;
+    protected NavMeshAgent navMeshAgent = null;
 
     public float stoppingDistance = 3.0f;
 
     public Transform aiSprite = null;
-
-    private AIAttack aIAttack = null;
 
     public bool canMove = true;
 
@@ -30,7 +28,6 @@ public class AI : Entity
 
     private void Start()
     {
-        aIAttack = GetComponent<AIAttack>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.updateRotation = false;
         navMeshAgent.updateUpAxis = false;
@@ -59,7 +56,7 @@ public class AI : Entity
         }
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (!target)
         {
@@ -84,8 +81,13 @@ public class AI : Entity
         else
         {
             navMeshAgent.SetDestination(transform.position);
-            aIAttack.WantToAttack();
+            WantToAttack();
         }
+    }
+
+    protected virtual void WantToAttack()
+    {
+
     }
 
     public void SetCanMove(bool newState)
@@ -97,7 +99,7 @@ public class AI : Entity
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected void OnTriggerEnter2D(Collider2D collision)
     {
         Player player = collision.GetComponent<Player>();
         if(player)
@@ -106,7 +108,7 @@ public class AI : Entity
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    protected void OnTriggerExit2D(Collider2D collision)
     {
         Player player = collision.GetComponent<Player>();
         if (player)

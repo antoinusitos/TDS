@@ -421,7 +421,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 15
 --- !u!1 &2624330860991805026
 GameObject:
   m_ObjectHideFlags: 0
@@ -537,7 +537,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f4d476a62bb33447a7c709af10a5851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aIAttack: {fileID: 4157697589172187202}
+  aIAttack: {fileID: 0}
 --- !u!1 &2967103430714361130
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,15 +715,15 @@ GameObject:
   - component: {fileID: 7400444256743169196}
   - component: {fileID: 7400444256743169197}
   - component: {fileID: 7400444256743169198}
-  - component: {fileID: 8337893071342976117}
+  - component: {fileID: 1028001880406966735}
   - component: {fileID: 2143981490354851954}
   - component: {fileID: 6790621241794781659}
   - component: {fileID: 4544173454666221560}
   - component: {fileID: -2949544459174259378}
-  - component: {fileID: 4157697589172187202}
+  - component: {fileID: 1468333596006033355}
   - component: {fileID: 2650848348691746186}
   m_Layer: 0
-  m_Name: AITest
+  m_Name: AITestLong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -794,7 +794,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.7, y: 1.7}
   m_EdgeRadius: 0
---- !u!114 &8337893071342976117
+--- !u!114 &1028001880406966735
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -803,7 +803,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7400444256743169199}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 580633bf94be7414dab015c09c081c91, type: 3}
+  m_Script: {fileID: 11500000, guid: 59553b8abd820a1489de46b72ae63eaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lifeSlider: {fileID: 1144337492}
@@ -888,7 +888,7 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &4157697589172187202
+--- !u!114 &1468333596006033355
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -897,12 +897,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7400444256743169199}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5910baaa249d89439ec478d87dfa6ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 09bf2fae3b7dbf048830ea4af772860d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackDetectionTransform: {fileID: 7219493469480697379}
-  attackAnimator: {fileID: 4848196113849271972}
+  attackAnimator: {fileID: 0}
   attackSize: 1
+  arrowPrefab: {fileID: 7229159789295394843, guid: 0b7cf0f067be3e449b910c36216b407f, type: 3}
 --- !u!82 &2650848348691746186
 AudioSource:
   m_ObjectHideFlags: 0

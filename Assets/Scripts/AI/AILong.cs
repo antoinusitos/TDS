@@ -1,0 +1,30 @@
+using UnityEngine;
+using UnityEngine.AI;
+
+public class AILong : AI
+{
+    private AIAttackLong aIAttack = null;
+
+    private void Start()
+    {
+        aIAttack = GetComponent<AIAttackLong>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        navMeshAgent.updateRotation = false;
+        navMeshAgent.updateUpAxis = false;
+    }
+    protected override void Update()
+    {
+        if (!target)
+        {
+            return;
+        }
+
+        Vector3 NewVector = target.transform.position - transform.position;
+        NewVector.Normalize();
+        float Angle = Mathf.Atan2(NewVector.y, NewVector.x) * Mathf.Rad2Deg;
+
+        aiSprite.localRotation = Quaternion.Euler(0, 0, Angle - 90);
+
+        aIAttack.WantToAttack(target.transform);
+    }
+}
