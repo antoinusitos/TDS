@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7229159789295394843}
   - component: {fileID: 7229159789295394842}
   - component: {fileID: 7229159789295394841}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,6 +50,7 @@ MonoBehaviour:
   entityStatLinked: {fileID: 0}
   speed: 10
   sprite: {fileID: 7229159789395703957}
+  sender: []
 --- !u!50 &7229159789295394842
 Rigidbody2D:
   serializedVersion: 4
