@@ -10,8 +10,10 @@ public class PlayerAttack : MonoBehaviour
     private float normalAttackSpeed = 0.5f;
     private bool isAttacking = false;
     private float currentAttack = 0.0f;
+    private float normalAttackStamina = 15.0f;
 
     private float bigAttackSpeed = 1.0f;
+    private float bigAttackStamina = 30.0f;
     private float currentAttackSpeed = 0.0f;
     private bool normalAttack = true;
 
@@ -19,11 +21,16 @@ public class PlayerAttack : MonoBehaviour
 
     private AudioSource audioSource = null;
 
+    private bool isParrying = false;
+    public GameObject parryObhect = null;
+
     private void Start()
     {
         player = GetComponent<Player>();
         InputManager.instance.inputActions.PlayerInput.Attack.performed += OnAttack;
         InputManager.instance.inputActions.PlayerInput.BigAttack.performed += OnBigAttack;
+        InputManager.instance.inputActions.PlayerInput.Parry.performed += OnParry;
+        InputManager.instance.inputActions.PlayerInput.Parry.canceled += OnStopParry;
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -65,6 +72,16 @@ public class PlayerAttack : MonoBehaviour
             return;
         }
 
+        if(player.GetEntityStat().currentStamina < (normalHit ? normalAttackStamina : bigAttackStamina))
+        {
+            return;
+        }
+
+        StopParry();
+
+        player.GetEntityStat().UpdateStaminaStat(-(normalHit ? normalAttackStamina : bigAttackStamina));
+        player.UseStamina();
+
         animator.SetTrigger("Attack");
         normalAttack = normalHit;
         isAttacking = true;
@@ -99,5 +116,27 @@ public class PlayerAttack : MonoBehaviour
     public void PlayAttackSound()
     {
         audioSource.Play();
+    }
+
+    public void OnParry(InputAction.CallbackContext obj)
+    {
+        isParrying = true;
+        parryObhect.SetActive(true);
+    }
+
+    public void OnStopParry(InputAction.CallbackContext obj)
+    {
+        StopParry();
+    }
+
+    public bool GetIsParrying()
+    {
+        return isParrying;
+    }
+
+    public void StopParry()
+    {
+        isParrying = false;
+        parryObhect.SetActive(false);
     }
 }

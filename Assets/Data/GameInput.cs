@@ -143,6 +143,15 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Parry"",
+                    ""type"": ""Button"",
+                    ""id"": ""4f22ca63-a044-4107-a700-097df1ea99a1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -519,6 +528,28 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bec832b9-b287-4c19-a40e-c178693c8ffd"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Parry"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8c4d2fa6-9d8e-423c-be30-e03a44892817"",
+                    ""path"": ""<Keyboard>/leftAlt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Parry"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -557,6 +588,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         m_PlayerInput_Target = m_PlayerInput.FindAction("Target", throwIfNotFound: true);
         m_PlayerInput_Menu = m_PlayerInput.FindAction("Menu", throwIfNotFound: true);
         m_PlayerInput_Dash = m_PlayerInput.FindAction("Dash", throwIfNotFound: true);
+        m_PlayerInput_Parry = m_PlayerInput.FindAction("Parry", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -629,6 +661,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerInput_Target;
     private readonly InputAction m_PlayerInput_Menu;
     private readonly InputAction m_PlayerInput_Dash;
+    private readonly InputAction m_PlayerInput_Parry;
     public struct PlayerInputActions
     {
         private @GameInput m_Wrapper;
@@ -646,6 +679,7 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         public InputAction @Target => m_Wrapper.m_PlayerInput_Target;
         public InputAction @Menu => m_Wrapper.m_PlayerInput_Menu;
         public InputAction @Dash => m_Wrapper.m_PlayerInput_Dash;
+        public InputAction @Parry => m_Wrapper.m_PlayerInput_Parry;
         public InputActionMap Get() { return m_Wrapper.m_PlayerInput; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -694,6 +728,9 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                 @Dash.started -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnDash;
+                @Parry.started -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnParry;
+                @Parry.performed -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnParry;
+                @Parry.canceled -= m_Wrapper.m_PlayerInputActionsCallbackInterface.OnParry;
             }
             m_Wrapper.m_PlayerInputActionsCallbackInterface = instance;
             if (instance != null)
@@ -737,6 +774,9 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
+                @Parry.started += instance.OnParry;
+                @Parry.performed += instance.OnParry;
+                @Parry.canceled += instance.OnParry;
             }
         }
     }
@@ -765,5 +805,6 @@ public partial class @GameInput : IInputActionCollection2, IDisposable
         void OnTarget(InputAction.CallbackContext context);
         void OnMenu(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+        void OnParry(InputAction.CallbackContext context);
     }
 }

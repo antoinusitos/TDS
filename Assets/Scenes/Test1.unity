@@ -11638,14 +11638,6 @@ PrefabInstance:
       propertyPath: staminaSlider
       value: 
       objectReference: {fileID: 898649501}
-    - target: {fileID: 712745971654314873, guid: e7f7d1c70dbff5c4cbc3865f6ad173ed, type: 3}
-      propertyPath: _maxDamage
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 712745971654314873, guid: e7f7d1c70dbff5c4cbc3865f6ad173ed, type: 3}
-      propertyPath: _currentDamage
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 5124728921075668118, guid: e7f7d1c70dbff5c4cbc3865f6ad173ed, type: 3}
       propertyPath: m_RootOrder
       value: 1

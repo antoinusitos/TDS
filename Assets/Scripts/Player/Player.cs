@@ -32,9 +32,11 @@ public class Player : Entity
 
     public GameObject menuCanvas = null;
 
-    private readonly float staminaRecoverDelay = 1.0f;
+    private readonly float staminaRecoverDelay = 2.0f;
     private float currentStaminaRecoverDelay = 0f;
     private readonly float staminaRecoverSpeed = 20.0f;
+
+    private PlayerAttack playerAttack = null;
 
     protected override void Awake()
     {
@@ -42,6 +44,7 @@ public class Player : Entity
         instance = this;
         startingEquipment = GetComponent<StartingEquipment>();
         startingPoint = transform.position;
+        playerAttack = GetComponent<PlayerAttack>();
     }
 
     private void Start()
@@ -53,11 +56,11 @@ public class Player : Entity
     {
         if(currentStaminaRecoverDelay < staminaRecoverDelay)
         {
-            currentStaminaRecoverDelay += Time.deltaTime;
+            currentStaminaRecoverDelay += Time.deltaTime * (playerAttack.GetIsParrying() ? 0.5f : 1.0f);
         }
         else if(entityStat.currentStamina < entityStat.maxStamina)
         {
-            entityStat.UpdateStaminaStat(Time.deltaTime * staminaRecoverSpeed);
+            entityStat.UpdateStaminaStat(Time.deltaTime * staminaRecoverSpeed * (playerAttack.GetIsParrying() ? 0.5f : 1.0f));
         }
 
         if (entityStat.lifeValueDirty)
@@ -88,6 +91,24 @@ public class Player : Entity
         if(playerState == PlayerState.DEAD)
         {
             return;
+        }
+
+        if(playerAttack.GetIsParrying())
+        {
+            float staminaBefore = entityStat.currentStamina;
+            entityStat.UpdateStaminaStat(-value);
+            UseStamina();
+
+            if(entityStat.currentStamina <= 0)
+            {
+                playerAttack.StopParry();
+            }
+
+            if (staminaBefore >= value)
+            {
+                SoundManager.instance.PlaySound("parry");
+                return;
+            }
         }
 
         SoundManager.instance.PlaySound("hit");
