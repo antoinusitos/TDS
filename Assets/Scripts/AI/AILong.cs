@@ -1,16 +1,13 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public class AILong : AI
 {
     private AIAttackLong aIAttack = null;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         aIAttack = GetComponent<AIAttackLong>();
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        navMeshAgent.updateRotation = false;
-        navMeshAgent.updateUpAxis = false;
     }
     protected override void Update()
     {

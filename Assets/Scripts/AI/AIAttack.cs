@@ -63,6 +63,10 @@ public class AIAttack : MonoBehaviour
                 if (player)
                 {
                     player.TakeDamage(entityStat.currentDamage);
+                    if(player.GetEntityStat().currentLife <= 0)
+                    {
+                        aI.LostTarget();
+                    }
                 }
             }
         }

@@ -45,7 +45,12 @@ public class PlayerInventory : Inventory
 
     private void TryUseItem(int itemID, int slotIndex)
     {
-        if(itemID == -1)
+        if (player.playerState != PlayerState.GAME)
+        {
+            return;
+        }
+
+        if (itemID == -1)
         {
             return;
         }

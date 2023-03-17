@@ -26,15 +26,22 @@ public class AI : Entity
 
     public UnityEvent eventOnDeath = null;
 
-    private void Start()
+    protected Vector3 startPosition = Vector3.zero;
+
+    protected bool returningToPosition = false;
+
+    protected virtual void Start()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
         navMeshAgent.updateRotation = false;
         navMeshAgent.updateUpAxis = false;
+        startPosition = transform.position;
+        navMeshAgent.enabled = true;
     }
 
-    public void TakeDamage(float amount)
+    public override void TakeDamage(float amount)
     {
+        SoundManager.instance.PlaySound("hit");
         entityStat.UpdateLifeStat(-amount);
         lifeSlider.value = entityStat.currentLife / entityStat.maxLife;
         if (entityStat.currentLife <= 0)
@@ -58,6 +65,20 @@ public class AI : Entity
 
     protected virtual void Update()
     {
+        if(returningToPosition)
+        {
+            HandleRotation((startPosition - transform.position).normalized);
+            if (Vector3.Distance(startPosition, transform.position) > stoppingDistance)
+            {
+                navMeshAgent.SetDestination(startPosition);
+            }
+            else
+            {
+                returningToPosition = false;
+            }
+            return;
+        }
+
         if (!target)
         {
             return;
@@ -68,11 +89,7 @@ public class AI : Entity
             return;
         }
 
-        Vector3 NewVector = target.transform.position - transform.position;
-        NewVector.Normalize();
-        float Angle = Mathf.Atan2(NewVector.y, NewVector.x) * Mathf.Rad2Deg;
-
-        aiSprite.localRotation = Quaternion.Euler(0, 0, Angle - 90);
+        HandleRotation((target.transform.position - transform.position).normalized);
 
         if (Vector3.Distance(target.transform.position, transform.position) > stoppingDistance)
         {
@@ -83,6 +100,13 @@ public class AI : Entity
             navMeshAgent.SetDestination(transform.position);
             WantToAttack();
         }
+    }
+
+    protected void HandleRotation(Vector3 vector)
+    {
+        float Angle = Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
+
+        aiSprite.localRotation = Quaternion.Euler(0, 0, Angle - 90);
     }
 
     protected virtual void WantToAttack()
@@ -102,9 +126,11 @@ public class AI : Entity
     protected void OnTriggerEnter2D(Collider2D collision)
     {
         Player player = collision.GetComponent<Player>();
-        if(player)
+        if(player && player.playerState != PlayerState.DEAD)
         {
+            navMeshAgent.velocity = Vector3.zero;
             target = player;
+            returningToPosition = false;
         }
     }
 
@@ -113,11 +139,18 @@ public class AI : Entity
         Player player = collision.GetComponent<Player>();
         if (player)
         {
-            target = null;
-            if(navMeshAgent && navMeshAgent.isActiveAndEnabled)
-            {
-                navMeshAgent.SetDestination(transform.position);
-            }
+            LostTarget();
+        }
+    }
+
+    public void LostTarget()
+    {
+        target = null;
+        navMeshAgent.velocity = Vector3.zero;
+        if (navMeshAgent && navMeshAgent.isActiveAndEnabled)
+        {
+            navMeshAgent.SetDestination(startPosition);
+            returningToPosition = true;
         }
     }
 }

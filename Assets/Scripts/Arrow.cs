@@ -38,10 +38,8 @@ public class Arrow : MonoBehaviour
         Entity entity = collision.GetComponent<Entity>();
         if(entity)
         {
-            entity.GetEntityStat().UpdateLifeStat(-entityStatLinked.currentDamage);
+            entity.TakeDamage(entityStatLinked.currentDamage);
         }
-
-        Debug.Log("hit " + collision.transform.name);
 
         Destroy(gameObject);
     }

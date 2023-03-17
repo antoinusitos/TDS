@@ -13,4 +13,9 @@ public class Entity : MonoBehaviour
     {
         return entityStat;
     }
+
+    public virtual void TakeDamage(float value)
+    {
+
+    }
 }

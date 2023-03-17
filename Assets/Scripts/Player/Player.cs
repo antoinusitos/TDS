@@ -7,7 +7,8 @@ public enum PlayerState
     GAME,
     MENU,
     NOTIFICATION,
-    LOCKED
+    LOCKED,
+    DEAD,
 }
 
 public class Player : Entity
@@ -82,23 +83,21 @@ public class Player : Entity
         menuCanvas.SetActive(true);
     }
 
-    public void TakeDamage(float value)
+    public override void TakeDamage(float value)
     {
+        if(playerState == PlayerState.DEAD)
+        {
+            return;
+        }
+
+        SoundManager.instance.PlaySound("hit");
+
         entityStat.UpdateLifeStat(-value);
         if(entityStat.currentLife <= 0)
         {
-            if(currentShrine != null)
-            {
-                transform.position = currentShrine.shrineSpawner.position;
-            }
-            else
-            {
-                transform.position = startingPoint;
-            }
-            CameraMovement.instance.SetCameraOnPlayer();
-            AIManager.instance.WipeAllEnemies();
-            AIManager.instance.SpawnAllEnemies();
-            ResetPlayer();
+            SoundManager.instance.PlaySound("death");
+            playerState = PlayerState.DEAD;
+            UIManager.instance.ShowDeathScreen();
         }
     }
 
@@ -112,6 +111,7 @@ public class Player : Entity
         entityStat.UpdateLifeStat(entityStat.maxLife);
         entityStat.UpdateStaminaStat(entityStat.maxStamina);
         entityStat.UpdateShapesStat(-entityStat.currentShapes);
+        playerState = PlayerState.GAME;
         if (startingEquipment)
         {
             startingEquipment.RefillIfMissing();
@@ -126,5 +126,21 @@ public class Player : Entity
     public void UseStamina()
     {
         currentStaminaRecoverDelay = 0;
+    }
+
+    public void HandlePlayerDeath()
+    {
+        if (currentShrine != null)
+        {
+            transform.position = currentShrine.shrineSpawner.position;
+        }
+        else
+        {
+            transform.position = startingPoint;
+        }
+        CameraMovement.instance.SetCameraOnPlayer();
+        AIManager.instance.WipeAllEnemies();
+        AIManager.instance.SpawnAllEnemies();
+        ResetPlayer();
     }
 }

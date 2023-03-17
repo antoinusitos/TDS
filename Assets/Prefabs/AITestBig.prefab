@@ -106,7 +106,11 @@ MonoBehaviour:
   stoppingDistance: 5
   aiSprite: {fileID: 3163121809998114898}
   canMove: 1
-  XPGiven: 0
+  shapesGiven: 0
+  targetFeedback: {fileID: 0}
+  eventOnDeath:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5807094434990590052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,8 +131,8 @@ MonoBehaviour:
   _maxStamina: 100
   _currentDamage: 100
   _maxDamage: 100
-  XPValueDirty: 0
-  _currentXP: 100
+  shapesValueDirty: 0
+  _currentShapes: 0
 --- !u!114 &1399247688305244621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,7 +168,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3163121809828578489}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 7
