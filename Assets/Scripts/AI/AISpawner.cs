@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AISpawner : MonoBehaviour
@@ -5,6 +6,8 @@ public class AISpawner : MonoBehaviour
     public GameObject aiToSpawn = null;
 
     private GameObject spawnedAI = null;
+
+    public List<ItemBackend> specialItems = new List<ItemBackend>();
 
     private void Start()
     {
@@ -15,7 +18,7 @@ public class AISpawner : MonoBehaviour
     {
         if(!spawnedAI && aiToSpawn)
         {
-            spawnedAI = Instantiate(aiToSpawn, transform.position, Quaternion.identity);
+            SpawnAI();
         }
     }
 
@@ -23,7 +26,20 @@ public class AISpawner : MonoBehaviour
     {
         if (aiToSpawn)
         {
-            spawnedAI = Instantiate(aiToSpawn, transform.position, Quaternion.identity);
+            SpawnAI();
+        }
+    }
+
+    private void SpawnAI()
+    {
+        spawnedAI = Instantiate(aiToSpawn, transform.position, Quaternion.identity);
+        Inventory inventory = spawnedAI.GetComponent<Inventory>();
+        if (inventory)
+        {
+            for(int i = 0; i < specialItems.Count; i++)
+            {
+                inventory.AddItem(specialItems[i].ID, specialItems[i].quantity);
+            }
         }
     }
 }
