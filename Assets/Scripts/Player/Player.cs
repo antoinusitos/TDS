@@ -54,6 +54,11 @@ public class Player : Entity
 
     private void Update()
     {
+        if(menuCanvas.activeSelf)
+        {
+            return;
+        }
+
         if(currentStaminaRecoverDelay < staminaRecoverDelay)
         {
             currentStaminaRecoverDelay += Time.deltaTime * (playerAttack.GetIsParrying() ? 0.5f : 1.0f);

@@ -8,6 +8,7 @@ public class Item
     public int quantity = 1;
     public string description = "";
     public Sprite sprite = null;
+    public bool isConsummable = true;
 
     public ItemEffect itemEffect = null;
 
@@ -27,6 +28,10 @@ public class Item
                     SoundManager.instance.PlaySound("drink");
                 }
                 break;
+            case ItemEffectType.SHAPES:
+                Player.instance.GiveShapes((int)itemEffect.effectValue);
+                SoundManager.instance.PlaySound("drink");
+                break;
         }
     }
 }
@@ -43,7 +48,8 @@ public enum ItemEffectType
 {
     NONE,
     REGEN,
-    PENALITY
+    PENALITY,
+    SHAPES
 }
 
 [System.Serializable]

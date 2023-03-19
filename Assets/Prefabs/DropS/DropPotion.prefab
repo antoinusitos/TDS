@@ -273,7 +273,7 @@ GameObject:
   - component: {fileID: 7421586450568862646}
   - component: {fileID: 7421586450568862645}
   m_Layer: 0
-  m_Name: Drop
+  m_Name: DropPotion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

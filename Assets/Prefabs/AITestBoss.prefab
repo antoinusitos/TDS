@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 7611002926297634204}
   - component: {fileID: 2165810658446742236}
   m_Layer: 0
-  m_Name: AITestBig
+  m_Name: AITestBoss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,13 +103,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifeValueDirty: 0
-  _currentLife: 200
-  _maxLife: 200
+  _currentLife: 400
+  _maxLife: 400
   staminaValueDirty: 0
   _currentStamina: 100
   _maxStamina: 100
-  _currentDamage: 50
-  _maxDamage: 50
+  _currentDamage: 75
+  _maxDamage: 75
   shapesValueDirty: 0
   _currentShapes: 0
 --- !u!114 &1399247688305244621
@@ -290,7 +290,7 @@ MonoBehaviour:
   stoppingDistance: 6
   aiSprite: {fileID: 3163121809998114898}
   canMove: 1
-  shapesGiven: 500
+  shapesGiven: 2000
   targetFeedback: {fileID: 4307421174368865034}
   eventOnDeath:
     m_PersistentCalls:

@@ -43,9 +43,9 @@ public class PlayerInventory : Inventory
         TryUseItem(itemIDForSlots[3], 3);
     }
 
-    private void TryUseItem(int itemID, int slotIndex)
+    public void TryUseItem(int itemID, int slotIndex)
     {
-        if (player.playerState != PlayerState.GAME)
+        if (player.playerState != PlayerState.GAME && player.playerState != PlayerState.MENU)
         {
             return;
         }
@@ -55,16 +55,27 @@ public class PlayerInventory : Inventory
             return;
         }
 
+        Item item = ItemManager.instance.itemsData.GetGameItemWithID(items[itemID].ID);
+        if(!item.isConsummable)
+        {
+            return;
+        }
+
         if (items[itemID].quantity > 0)
         {
             items[itemID].quantity--;
-            ItemManager.instance.itemsData.GetGameItemWithID(items[itemID].ID).Use(player);
+            item.Use(player);
             UpdateSlot(slotIndex, items[itemID]);
         }
     }
 
     public override void UpdateSlot(int slotIndex, ItemBackend itemBackend)
     {
+        if(slotIndex == -1)
+        {
+            return;
+        }
+
         itemIDForSlots[slotIndex] = itemBackend.ID;
 
         if(itemBackend.ID == -1)

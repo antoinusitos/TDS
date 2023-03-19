@@ -9,8 +9,21 @@ public class InGameMenu : MonoBehaviour
     public Text staminaText = null;
     public Text xpText = null;
 
-    public Text inventoryTextPrefab = null;
+    public Button inventoryTextPrefab = null;
     public Transform inventoryPanel = null;
+
+    public Text inventoryNameText = null;
+    public Text inventoryDescriptionText = null;
+
+    private int indexItem = 0;
+
+    private PlayerInventory playerInventory = null;
+
+    private List<InventoryButtonAssociation> buttons = new List<InventoryButtonAssociation>();
+
+    public Button useButton = null;
+
+    private Color unselectColor = new Color(0, 0, 0, 63.0f / 255.0f);
 
     public void Start()
     {
@@ -19,6 +32,23 @@ public class InGameMenu : MonoBehaviour
 
     public void OnEnable()
     {
+        if (!playerInventory)
+        {
+            playerInventory = Player.instance.GetComponent<PlayerInventory>();
+        }
+
+        RefreshInventory();
+    }
+
+    private void RefreshInventory(bool resetPos = true)
+    {
+        if(resetPos)
+        {
+            indexItem = 0;
+        }
+
+        buttons.Clear();
+
         NotificationManager.instance.CloseNotificationPanel();
 
         EntityStat entityStat = Player.instance.GetEntityStat();
@@ -31,11 +61,29 @@ public class InGameMenu : MonoBehaviour
             Destroy(inventoryPanel.GetChild(i).gameObject);
         }
 
-        Inventory inventory = Player.instance.GetComponent<Inventory>();
-        foreach (KeyValuePair<int, ItemBackend> itemBackend in inventory.items)
+        int index = 0;
+        foreach (KeyValuePair<int, ItemBackend> itemBackend in playerInventory.items)
         {
             Item item = ItemManager.instance.itemsData.GetGameItemWithID(itemBackend.Key);
-            Instantiate(inventoryTextPrefab, inventoryPanel).text = $"{item.name} \t x{itemBackend.Value.quantity}";
+            Button button = Instantiate(inventoryTextPrefab, inventoryPanel);
+            button.transform.GetChild(0).GetComponent<Image>().sprite = item.sprite;
+            InventoryButtonAssociation inventoryButtonAssociation = button.GetComponent<InventoryButtonAssociation>();
+            inventoryButtonAssociation.itemAssociated = item;
+            buttons.Add(inventoryButtonAssociation);
+            int localIndex = index;
+            if (index == 0 && resetPos)
+            {
+                SelectItem(localIndex);
+            }
+            button.onClick.AddListener(delegate
+            {
+                SelectItem(localIndex);
+            });
+            index++;
+        }
+        if (!resetPos)
+        {
+            SelectItem(indexItem);
         }
     }
 
@@ -48,5 +96,31 @@ public class InGameMenu : MonoBehaviour
 
         gameObject.SetActive(false);
         Player.instance.playerState = PlayerState.GAME;
+    }
+
+    private void SelectItem(int newIndex)
+    {
+        buttons[indexItem].GetComponent<Image>().color = unselectColor;
+
+        indexItem = newIndex;
+        int ID = buttons[indexItem].itemAssociated.ID;
+        inventoryNameText.text = $"{buttons[newIndex].itemAssociated.name} \t x{playerInventory.items[ID].quantity}";
+        inventoryDescriptionText.text = buttons[newIndex].itemAssociated.description;
+        buttons[newIndex].GetComponent<Image>().color = Color.red;
+        if (buttons[newIndex].itemAssociated.isConsummable)
+        {
+            useButton.interactable = true;
+        }
+        else
+        {
+            useButton.interactable = false;
+        }
+    }
+
+    public void UseItem()
+    {
+        int ID = buttons[indexItem].itemAssociated.ID;
+        playerInventory.TryUseItem(ID, playerInventory.items[ID].slotAffected);
+        RefreshInventory(false);
     }
 }

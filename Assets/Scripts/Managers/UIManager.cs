@@ -50,6 +50,7 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator ShowDeath()
     {
+        deathImage.gameObject.SetActive(true);
         Color white = Color.white;
         white.a = 0;
         deathText.color = white;
@@ -73,6 +74,7 @@ public class UIManager : MonoBehaviour
 
         yield return new WaitForSeconds(2);
         ShowLoadScreen(true);
+        deathImage.gameObject.SetActive(false);
         Player.instance.HandlePlayerDeath();
         yield return new WaitForSeconds(1);
         white.a = 0;
