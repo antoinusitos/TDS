@@ -21,6 +21,8 @@ public class InGameMenu : MonoBehaviour
 
     private List<InventoryButtonAssociation> buttons = new List<InventoryButtonAssociation>();
 
+    private int lastButtonsLength = 0;
+
     public Button useButton = null;
 
     private Color unselectColor = new Color(0, 0, 0, 63.0f / 255.0f);
@@ -42,7 +44,7 @@ public class InGameMenu : MonoBehaviour
 
     private void RefreshInventory(bool resetPos = true)
     {
-        if(resetPos)
+        if(resetPos || lastButtonsLength != playerInventory.items.Count)
         {
             indexItem = 0;
         }
@@ -81,6 +83,7 @@ public class InGameMenu : MonoBehaviour
             });
             index++;
         }
+        lastButtonsLength = playerInventory.items.Count;
         if (!resetPos)
         {
             SelectItem(indexItem);
@@ -122,5 +125,10 @@ public class InGameMenu : MonoBehaviour
         int ID = buttons[indexItem].itemAssociated.ID;
         playerInventory.TryUseItem(ID, playerInventory.items[ID].slotAffected);
         RefreshInventory(false);
+    }
+
+    public void MoveRight()
+    {
+        
     }
 }

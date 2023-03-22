@@ -9,6 +9,8 @@ public class Item
     public string description = "";
     public Sprite sprite = null;
     public bool isConsummable = true;
+    public bool canStayInInventory = true;
+    public bool canBeSlotted = true;
 
     public ItemEffect itemEffect = null;
 

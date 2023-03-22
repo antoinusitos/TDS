@@ -65,7 +65,15 @@ public class PlayerInventory : Inventory
         {
             items[itemID].quantity--;
             item.Use(player);
-            UpdateSlot(slotIndex, items[itemID]);
+            if(items[itemID].quantity <= 0)
+            {
+                UpdateSlot(slotIndex, null);
+            }
+            else
+            {
+                UpdateSlot(slotIndex, items[itemID]);
+            }
+            items.Remove(itemID);
         }
     }
 
@@ -78,7 +86,7 @@ public class PlayerInventory : Inventory
 
         itemIDForSlots[slotIndex] = itemBackend.ID;
 
-        if(itemBackend.ID == -1)
+        if(itemBackend.ID == -1 || itemBackend == null)
         {
             slotsImages[slotIndex].sprite = null;
             slotsImages[slotIndex].color = itemNotAffected;

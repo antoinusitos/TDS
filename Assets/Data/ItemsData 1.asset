@@ -19,6 +19,8 @@ MonoBehaviour:
     description: Regen Health
     sprite: {fileID: 21300000, guid: 0ccc508108fa6ed4fa11b4a467d7f609, type: 3}
     isConsummable: 1
+    canStayInInventory: 0
+    canBeSlotted: 1
     itemEffect:
       itemEffectType: 1
       category: 0
@@ -29,6 +31,8 @@ MonoBehaviour:
     description: Key of the cell
     sprite: {fileID: 21300000, guid: f9161c6c9e06dc445ada3ee16d991f90, type: 3}
     isConsummable: 0
+    canStayInInventory: 1
+    canBeSlotted: 0
     itemEffect:
       itemEffectType: 0
       category: 0
@@ -39,6 +43,8 @@ MonoBehaviour:
     description: Key of the door that lead to the boss
     sprite: {fileID: 21300000, guid: f9161c6c9e06dc445ada3ee16d991f90, type: 3}
     isConsummable: 0
+    canStayInInventory: 1
+    canBeSlotted: 0
     itemEffect:
       itemEffectType: 0
       category: 0
@@ -49,6 +55,8 @@ MonoBehaviour:
     description: Key of the supply room
     sprite: {fileID: 21300000, guid: f9161c6c9e06dc445ada3ee16d991f90, type: 3}
     isConsummable: 0
+    canStayInInventory: 1
+    canBeSlotted: 0
     itemEffect:
       itemEffectType: 0
       category: 0
@@ -59,6 +67,8 @@ MonoBehaviour:
     description: Key of the break room
     sprite: {fileID: 21300000, guid: f9161c6c9e06dc445ada3ee16d991f90, type: 3}
     isConsummable: 0
+    canStayInInventory: 1
+    canBeSlotted: 0
     itemEffect:
       itemEffectType: 0
       category: 0
@@ -69,6 +79,8 @@ MonoBehaviour:
     description: Shapes founds on the body of an unknow soldier
     sprite: {fileID: 21300000, guid: daf2ab606d4db0d4f9ecf4c02137d2a8, type: 3}
     isConsummable: 1
+    canStayInInventory: 0
+    canBeSlotted: 1
     itemEffect:
       itemEffectType: 3
       category: 0
