@@ -84,4 +84,17 @@ MonoBehaviour:
     itemEffect:
       itemEffectType: 3
       category: 0
-      effectValue: 50
+      effectValue: 500
+  - ID: 6
+    name: Special Shape
+    quantity: 1
+    description: Shape earned when defeated a boss, use it to earn a big amount of
+      shapes
+    sprite: {fileID: 21300000, guid: daf2ab606d4db0d4f9ecf4c02137d2a8, type: 3}
+    isConsummable: 1
+    canStayInInventory: 0
+    canBeSlotted: 1
+    itemEffect:
+      itemEffectType: 3
+      category: 0
+      effectValue: 5000

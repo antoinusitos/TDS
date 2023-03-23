@@ -77,15 +77,15 @@ public class EntityStat : MonoBehaviour
     /// </summary>
     public bool shapesValueDirty = false;
 
-    public int currentShapes { get { return _currentShapes; } set { _currentShapes = value;  } }
+    public float currentShapes { get { return _currentShapes; } set { _currentShapes = value;  } }
 
     [SerializeField]
-    private int _currentShapes = 0;
+    private float _currentShapes = 0;
 
 
-    public void UpdateShapesStat(int value)
+    public void UpdateShapesStat(float value)
     {
-        _currentShapes += value;
+        currentShapes += value;
         shapesValueDirty = true;
     }
 }

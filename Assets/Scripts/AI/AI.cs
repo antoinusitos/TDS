@@ -58,7 +58,7 @@ public class AI : Entity
             }
 
             eventOnDeath.Invoke();
-            Player.instance.GetEntityStat().UpdateShapesStat(shapesGiven);
+            Player.instance.GiveShapes(shapesGiven);
             Destroy(gameObject);
         }
     }

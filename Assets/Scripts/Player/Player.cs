@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -38,6 +39,8 @@ public class Player : Entity
 
     private PlayerAttack playerAttack = null;
 
+    public LostShapes lostShapesPrefab = null;
+
     protected override void Awake()
     {
         base.Awake();
@@ -75,10 +78,6 @@ public class Player : Entity
         if (entityStat.staminaValueDirty)
         {
             staminaSlider.value = entityStat.currentStamina / entityStat.maxStamina;
-        }
-        if (entityStat.shapesValueDirty)
-        {
-            shapesText.text = entityStat.currentShapes.ToString();
         }
     }
 
@@ -137,6 +136,7 @@ public class Player : Entity
         entityStat.UpdateLifeStat(entityStat.maxLife);
         entityStat.UpdateStaminaStat(entityStat.maxStamina);
         entityStat.UpdateShapesStat(-entityStat.currentShapes);
+        UpdateShapesText(0);
         playerState = PlayerState.GAME;
         if (startingEquipment)
         {
@@ -146,7 +146,26 @@ public class Player : Entity
 
     public void GiveShapes(int amount)
     {
+        StartCoroutine(AnimationShapes(entityStat.currentShapes, amount));
         entityStat.UpdateShapesStat(amount);
+    }
+
+    private IEnumerator AnimationShapes(float start, float amount)
+    {
+        float timer = 0;
+        while (timer < 1)
+        {
+            float toAdd = Mathf.Lerp(start, amount, timer);
+            UpdateShapesText(start + toAdd);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        UpdateShapesText(start + amount);
+    }
+
+    private void UpdateShapesText(float value)
+    {
+        shapesText.text = value.ToString("F0");
     }
 
     public void UseStamina()
@@ -156,6 +175,7 @@ public class Player : Entity
 
     public void HandlePlayerDeath()
     {
+        Instantiate(lostShapesPrefab, transform.position, Quaternion.identity).shapes = (int)entityStat.currentShapes;
         if (currentShrine != null)
         {
             transform.position = currentShrine.shrineSpawner.position;
